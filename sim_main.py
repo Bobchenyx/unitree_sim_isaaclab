@@ -595,6 +595,12 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+    except Exception as e:
+        import traceback
+        print(f"\n{'='*60}")
+        print(f"FATAL: unhandled exception in main():")
+        traceback.print_exc()
+        print(f"{'='*60}\n")
     finally:
         print("Performing final cleanup...")
         

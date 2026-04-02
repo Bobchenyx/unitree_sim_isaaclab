@@ -2,6 +2,33 @@
 
 Supplementary notes for issues not covered in the official install doc (`isaacsim4.5_install.md` Section 2.3).
 
+## Isaac Lab Version Compatibility (Critical)
+
+Each Isaac Sim version requires a specific Isaac Lab commit. Using the wrong version will cause runtime errors (e.g., `wp.transform_compose` not found in Warp).
+
+| Isaac Sim | Isaac Lab commit |
+|-----------|-----------------|
+| 4.5.0 | `91ad4944f2b7fad29d52c04a5264a082bcaad71d` |
+| 5.0.0 | `v2.2.0` |
+| 5.1.0 | `80094be3245aa5c8376a7464d29cb4412ea518f5` |
+
+After cloning Isaac Lab, **you must checkout the correct version before running `isaaclab.sh --install`**:
+```bash
+cd IsaacLab
+git checkout 91ad4944f2b7fad29d52c04a5264a082bcaad71d
+./isaaclab.sh --install
+```
+
+If you already installed the wrong version, fix it by:
+```bash
+cd IsaacLab
+git checkout 91ad4944f2b7fad29d52c04a5264a082bcaad71d
+./isaaclab.sh --install
+# Then reinstall PyTorch to fix CUDA library version conflicts:
+pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu121
+pip install numpy==1.26.4
+```
+
 ## Why `auto_setup_env.sh` Fails on Ubuntu 20.04
 
 Ubuntu 20.04 has glibc 2.31, but all Isaac Sim pip wheels require `manylinux_2_34` (glibc >= 2.34). This cannot be fixed without upgrading the OS. Must use binary install instead.
